@@ -1,8 +1,11 @@
 package com.titlark.utils;
 
+import javax.net.ssl.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.text.DecimalFormat;
 import java.util.Base64;
 import java.util.List;
@@ -118,6 +121,16 @@ public class FileUtil {
      * @return
      */
     public static InputStream readRemote(String remoteUrl) {
+        return isHttps(remoteUrl) ? readHttps(remoteUrl) : readHttp(remoteUrl);
+    }
+
+    /**
+     * 读取http请求
+     *
+     * @param remoteUrl
+     * @return
+     */
+    private static InputStream readHttp(String remoteUrl) {
         try {
             HttpURLConnection conn = (HttpURLConnection) new URL(remoteUrl).openConnection();
             conn.setConnectTimeout(60000);
@@ -129,6 +142,70 @@ public class FileUtil {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * 读取https请求
+     *
+     * @param remoteUrl
+     * @return
+     */
+    private static InputStream readHttps(String remoteUrl) {
+        try {
+            HttpsURLConnection conn = (HttpsURLConnection) new URL(remoteUrl).openConnection();
+            conn.setSSLSocketFactory(getSSLSocketFactory());
+            conn.setConnectTimeout(60000);
+            if (conn.getResponseCode() == HttpsURLConnection.HTTP_OK) {
+                return conn.getInputStream();
+            }
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 获取SSLSocketFactory对象
+     *
+     * @return
+     */
+    private static SSLSocketFactory getSSLSocketFactory() {
+        TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+            @Override
+            public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+
+            }
+
+            @Override
+            public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+
+            }
+
+            @Override
+            public X509Certificate[] getAcceptedIssuers() {
+                return new X509Certificate[0];
+            }
+        }};
+        // Install the all-trusting trust manager
+        try {
+            SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+            return sslContext.getSocketFactory();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 是否是https
+     *
+     * @param remoteUrl
+     * @return
+     */
+    private static boolean isHttps(String remoteUrl) {
+        return remoteUrl.toLowerCase().startsWith("https");
     }
 
     /**
