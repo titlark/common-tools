@@ -16,7 +16,7 @@ public class ImageUtilTest {
             //纵向分隔个数
             int yCopies = 3;
 
-            ImageUtil.cutPictures(imageFilePath, outFileDir, 3, 3);
+            ImageUtil.cutPictures(imageFilePath, outFileDir, 3, 9);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -27,7 +27,7 @@ public class ImageUtilTest {
         try {
             String imageFileDir = "C:\\Users\\lark\\Desktop\\test";
             String outFilePath = "C:\\Users\\lark\\Desktop\\merge.png";
-            ImageUtil.mergePictures(imageFileDir, outFilePath, 3, 3);
+            ImageUtil.mergePictures(imageFileDir, outFilePath, 3, 9);
         } catch (IOException e) {
             e.printStackTrace();
         }
