@@ -17,6 +17,9 @@ public class IDCardUtilTest extends TestCase {
         System.out.println("validIdCard = " + validIdCard);
     }
 
+    /**
+     * 获取身份证号码归属地
+     */
     public void testGetRegion() {
         String region = IDCardUtil.getRegion(idCard);
         System.out.println("region = " + region);
