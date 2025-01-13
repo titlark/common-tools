@@ -9,6 +9,9 @@ public class IDCardUtilTest extends TestCase {
 
     private final String idCard = "411111111111111111";
 
+    /**
+     * 校验是否是合法的身份证号码
+     */
     public void testIsValidIdCard() {
         boolean validIdCard = IDCardUtil.isValidIdCard(idCard);
         System.out.println("validIdCard = " + validIdCard);
