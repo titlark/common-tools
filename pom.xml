@@ -136,6 +136,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <!-- maven 打包时跳过测试 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
