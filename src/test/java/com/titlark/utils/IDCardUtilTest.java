@@ -25,6 +25,9 @@ public class IDCardUtilTest extends TestCase {
         System.out.println("region = " + region);
     }
 
+    /**
+     * 获取年龄
+     */
     public void testGetAge() {
         int age = IDCardUtil.getAge(idCard);
         System.out.println("age = " + age);
