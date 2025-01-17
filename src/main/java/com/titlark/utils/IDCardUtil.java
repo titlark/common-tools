@@ -20,6 +20,9 @@ public class IDCardUtil {
      */
     private static final String ID_CARD_REGEX = "^[1-9]\\d{5}(18|19|20)\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])\\d{3}[0-9Xx]$";
 
+    private IDCardUtil() {
+    }
+
     /**
      * 校验身份证号码是否合法
      *

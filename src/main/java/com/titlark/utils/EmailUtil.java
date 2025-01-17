@@ -13,6 +13,9 @@ public class EmailUtil {
     // 定义邮箱的正则表达式
     private static final String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 
+    private EmailUtil() {
+    }
+
     /**
      * 判断邮箱是否是合法的邮箱
      *
